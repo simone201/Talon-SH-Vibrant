@@ -490,9 +490,8 @@ static int sec_jack_probe(struct platform_device *pdev)
 
 	dev_set_drvdata(&pdev->dev, hi);
 
-#if defined(CONFIG_GALAXY_I897)
-        pdata->det_active_high = 1;
-#endif
+	/*Headphone Logic Fix for Vibrant*/
+    pdata->det_active_high = 1;
 
 	return 0;
 
