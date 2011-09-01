@@ -546,9 +546,7 @@
 
 #define GPIO_AP_PMIC_SCL		S5PV210_GPJ4(3)
 
-#if defined(CONFIG_GALAXY_I897)
 #define GPIO_EAR_MICBIAS_EN		S5PV210_GPJ4(4)
-#endif
 
 #define GPIO_MP010			S5PV210_MP01(0)
 

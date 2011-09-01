@@ -1217,20 +1217,16 @@ static struct touchkey_platform_data touchkey_data = {
 
 static struct gpio_event_direct_entry aries_keypad_key_map[] = {
 	{
-		.gpio	= S5PV210_GPH2(6),
-		.code	= KEY_POWER,
+	.gpio = S5PV210_GPH2(6),
+	.code = KEY_POWER,
 	},
 	{
-		.gpio	= S5PV210_GPH3(1),
-		.code	= KEY_VOLUMEDOWN,
+	.gpio = S5PV210_GPH3(1),
+	.code = KEY_VOLUMEDOWN,
 	},
 	{
-		.gpio	= S5PV210_GPH3(2),
-		.code	= KEY_VOLUMEUP,
-	},
-	{
-		.gpio	= S5PV210_GPH3(5),
-		.code	= KEY_HOME,
+	.gpio = S5PV210_GPH3(2),
+	.code = KEY_VOLUMEUP,
 	}
 };
 
@@ -1281,11 +1277,8 @@ static bool jack_mic_bias;
 static void set_shared_mic_bias(void)
 {
 #if !defined(CONFIG_ARIES_NTT)
-#if defined(CONFIG_GALAXY_I897)
         gpio_set_value(GPIO_MICBIAS_EN, wm8994_mic_bias);
         gpio_set_value(GPIO_EAR_MICBIAS_EN, jack_mic_bias);
-#else
-	gpio_set_value(GPIO_MICBIAS_EN, wm8994_mic_bias || jack_mic_bias);
 #endif
 #else
 	gpio_set_value(GPIO_MICBIAS_EN, wm8994_mic_bias);
@@ -2655,45 +2648,25 @@ static struct sec_jack_zone sec_jack_zones[] = {
 		.check_count = 20,
 		.jack_type = SEC_HEADSET_3POLE,
 	},
-#if defined(CONFIG_GALAXY_I897) //cappy is 700 to 2500
+	/*Fix for Vibrant Headset - is 1500 to 5000*/
         {
-                /* 0 < adc <= 700, unstable zone, default to 3pole if it stays
-                 * in this range for 800ms (10ms delays, 80 samples)
-                 */
-                .adc_high = 700,
+                /* 0 < adc <= 1500, unstable zone, default to 3pole if it stays
+* in this range for 800ms (10ms delays, 80 samples)
+*/
+                .adc_high = 1500,
                 .delay_ms = 10,
                 .check_count = 80,
                 .jack_type = SEC_HEADSET_3POLE,
         },
         {
-                /* 700 < adc <= 2500, unstable zone, default to 4pole if it
-                 * stays in this range for 800ms (10ms delays, 80 samples)
-                 */
-                .adc_high = 2500,
+                /* 1500 < adc <= 5000, unstable zone, default to 4pole if it
+* stays in this range for 800ms (10ms delays, 80 samples)
+*/
+                .adc_high = 5000,
                 .delay_ms = 10,
                 .check_count = 80,
                 .jack_type = SEC_HEADSET_4POLE,
         },
-#else
-	{
-		/* 0 < adc <= 900, unstable zone, default to 3pole if it stays
-		 * in this range for 800ms (10ms delays, 80 samples)
-		 */
-		.adc_high = 900,
-		.delay_ms = 10,
-		.check_count = 80,
-		.jack_type = SEC_HEADSET_3POLE,
-	},
-	{
-		/* 900 < adc <= 2000, unstable zone, default to 4pole if it
-		 * stays in this range for 800ms (10ms delays, 80 samples)
-		 */
-		.adc_high = 2000,
-		.delay_ms = 10,
-		.check_count = 80,
-		.jack_type = SEC_HEADSET_4POLE,
-	},
-#endif
 	{
 		/* 2000 < adc <= 3400, 4 pole zone, default to 4pole if it
 		 * stays in this range for 100ms (10ms delays, 10 samples)
@@ -2713,64 +2686,7 @@ static struct sec_jack_zone sec_jack_zones[] = {
 		.jack_type = SEC_HEADSET_3POLE,
 	},
 };
-#else
-static struct sec_jack_zone sec_jack_zones[] = {
-	{
-		/* adc == 0, unstable zone, default to 3pole if it stays
-		 * in this range for 300ms (15ms delays, 20 samples)
-		 */
-		.adc_high = 0,
-		.delay_ms = 15,
-		.check_count = 20,
-		.jack_type = SEC_HEADSET_3POLE,
-	},
-	{
-		/* 0 < adc <= 500, unstable zone, default to 3pole if it stays
-		 * in this range for 800ms (10ms delays, 80 samples)
-		 */
-		.adc_high = 500,
-		.delay_ms = 10,
-		.check_count = 80,
-		.jack_type = SEC_HEADSET_3POLE,
-	},
-	{
-		/* 500 < adc <= 3300, 4 pole zone, default to 4pole if it
-		 * stays in this range for 800ms (10ms delays, 80 samples)
-		 */
-		.adc_high = 3300,
-		.delay_ms = 10,
-		.check_count = 10,
-		.jack_type = SEC_HEADSET_4POLE,
-	},
-	{
-		/* 3300 < adc <= 3400, unstable zone, default to 3pole if it
-		 * stays in this range for 800ms (10ms delays, 80 samples)
-		 */
-		.adc_high = 3400,
-		.delay_ms = 10,
-		.check_count = 80,
-		.jack_type = SEC_HEADSET_3POLE,
-	},
-	{
-		/* 3400 < adc <= 3600, 4 pole zone, default to 4 pole if it
-		 * stays in this range for 200ms (10ms delays, 20 samples)
-		 */
-		.adc_high = 3600,
-		.delay_ms = 10,
-		.check_count = 20,
-		.jack_type = SEC_HEADSET_4POLE,
-	},	
-	{
-		/* adc > 3600, unstable zone, default to 3pole if it stays
-		 * in this range for two seconds (10ms delays, 200 samples)
-		 */
-		.adc_high = 0x7fffffff,
-		.delay_ms = 10,
-		.check_count = 200,
-		.jack_type = SEC_HEADSET_3POLE,
-	},
-};
-#endif
+
 /* Only support one button of earjack in S1_EUR HW.
  * If your HW supports 3-buttons earjack made by Samsung and HTC,
  * add some zones here.
@@ -2797,11 +2713,7 @@ struct sec_jack_platform_data sec_jack_pdata = {
 	.buttons_zones = sec_jack_buttons_zones,
 	.num_buttons_zones = ARRAY_SIZE(sec_jack_buttons_zones),
 	.det_gpio = GPIO_DET_35,
-#if defined(CONFIG_GALAXY_I897)
 	.send_end_gpio = GPIO_KBC2,
-#else
-	.send_end_gpio = GPIO_EAR_SEND_END,
-#endif
 };
 
 static struct platform_device sec_device_jack = {
@@ -3389,9 +3301,7 @@ static void __init sound_init(void)
 
 #if !defined(CONFIG_ARIES_NTT)
 	gpio_request(GPIO_MICBIAS_EN, "micbias_enable");
-#if defined(CONFIG_GALAXY_I897)
 	gpio_request(GPIO_EAR_MICBIAS_EN, "ear_micbias_enable");
-#endif
 #else
 	gpio_request(GPIO_MICBIAS_EN, "micbias_enable");
 	gpio_request(GPIO_SUB_MICBIAS_EN, "sub_micbias_enable");
