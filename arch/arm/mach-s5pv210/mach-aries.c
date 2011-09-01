@@ -1279,7 +1279,6 @@ static void set_shared_mic_bias(void)
 #if !defined(CONFIG_ARIES_NTT)
         gpio_set_value(GPIO_MICBIAS_EN, wm8994_mic_bias);
         gpio_set_value(GPIO_EAR_MICBIAS_EN, jack_mic_bias);
-#endif
 #else
 	gpio_set_value(GPIO_MICBIAS_EN, wm8994_mic_bias);
 	gpio_set_value(GPIO_SUB_MICBIAS_EN, jack_mic_bias);
