@@ -833,10 +833,10 @@ service geomagneticd /system/bin/geomagneticd
     user compass
     group system input
     
-service gpsd /system/vendor/bin/launch_gps.sh
-    socket gps seqpacket 0660 gps system
-    user gps
-    group system inet
+service agpsd /system/bin/agpsd
+     user system
+     group system inet
+     oneshot
 
 service tvout /system/bin/tvoutserver
      user system
