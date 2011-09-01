@@ -2636,7 +2636,6 @@ static struct platform_device sec_device_btsleep = {
 	.id	= -1,
 };
 
-#if !defined(CONFIG_ARIES_NTT)
 static struct sec_jack_zone sec_jack_zones[] = {
 	{
 		/* adc == 0, unstable zone, default to 3pole if it stays
@@ -2647,7 +2646,7 @@ static struct sec_jack_zone sec_jack_zones[] = {
 		.check_count = 20,
 		.jack_type = SEC_HEADSET_3POLE,
 	},
-	/*Fix for Vibrant Headset - is 1500 to 5000*/
+	/* Fix for Vibrant Headset - is 1500 to 5000 */
         {
                 /* 0 < adc <= 1500, unstable zone, default to 3pole if it stays
 * in this range for 800ms (10ms delays, 80 samples)
