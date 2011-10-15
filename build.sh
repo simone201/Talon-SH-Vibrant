@@ -3,7 +3,7 @@
 # modified by kodos96
 # modified by simone201 - added concurrency level (for multicore processors)
 
-export CONCURRENCY_LEVEL=4
+export CONCURRENCY_LEVEL=2
 
 if ! [ -e .config ]; then
  make $1
@@ -12,13 +12,15 @@ fi
 # Linaro Android 4.6 (GCC 4.6.2) toolchain - http://www.linaro.org
 export CROSS_COMPILE="/home/simone/android-toolchain-eabi/bin/arm-eabi-"
 
-export KBUILD_BUILD_VERSION="Talon-SH-T5x"
+export KBUILD_BUILD_VERSION="Talon-SH-T6x"
 
 #export LOCALVERSION="-I9000XWJVB-CL118186"
 #export LOCALVERSION="-I9000XWJVH-CL184813"
 #export LOCALVERSION="-I9000XXJVP-CL264642"
 #export LOCALVERSION="-I9000XXJVQ-CL281085"
-export LOCALVERSION="-I9000XXJVR-CL425308"
+#export LOCALVERSION="-I9000XXJVR-CL425308"
+#export LOCALVERSION="-I9000XXJVS-CL565837" 
+export LOCALVERSION="-I9000XXJVT-CL617736"
 
 export INSTALL_MOD_PATH=./mod_inst
 make modules -j`grep 'processor' /proc/cpuinfo | wc -l`
