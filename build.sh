@@ -3,7 +3,7 @@
 # modified by kodos96
 # modified by simone201 - added concurrency level (for multicore processors)
 
-export CONCURRENCY_LEVEL=2
+export CONCURRENCY_LEVEL=4
 
 if ! [ -e .config ]; then
  make $1
